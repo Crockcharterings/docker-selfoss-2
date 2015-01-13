@@ -5,7 +5,8 @@ server {
     
 	access_log /var/log/nginx/rss.access.log;
     error_log /var/log/nginx/rss.error.log;
-    server_name selfoss;
+
+	server_name localhost
 	
 	location ~* \ (gif|jpg|png) {
         expires 30d;
