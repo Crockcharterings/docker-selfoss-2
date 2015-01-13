@@ -1,0 +1,22 @@
+FROM ubuntu
+MAINTAINER Niels Theen <werwofl@googlemail.com>
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
+  nginx git supervisor php5-fpm php5-cli php5-curl php5-gd php5-json \
+  php5-pgsql php5-mysql && apt-get clean
+
+ADD https://github.com/SSilence/selfoss/SSilence/selfoss/archive/master.zip /selfoss.zip
+RUN unzip selfoss.zip && mv php-redis-server-master php-redis-server
+WORKDIR selfoss
+
+RUN chmod 666 data/favicons 
+RUN chmod 666 data/logs
+RUN chmod 666 data/thumbnails
+RUN chmod 666 data/sqlite
+RUN chmod 666 public/
+
+RUN php update.php  
+
+USER nobody
+EXPOSE 6379
+CMD php run.php
